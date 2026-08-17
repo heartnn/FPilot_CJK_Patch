@@ -290,9 +290,14 @@ def build_patterns():
 
     return original, bytes(patched)
 
+def get_base_dir():
+    if getattr(sys, "frozen", False):
+        return Path(sys.executable).resolve().parent
+
+    return Path(__file__).resolve().parent
 
 def find_local_source():
-    script_dir = Path(__file__).resolve().parent
+    script_dir = get_base_dir()
 
     candidates = [
         Path.cwd() / "FPilot.exe",
